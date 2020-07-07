@@ -81,18 +81,17 @@ if [[ $readvalue = @(b|B) ]]; then
  arqslist="$BASICINST"
  for arqx in `echo "${arqslist}"`; do
  [[ -e ${DIR}/${KEY}/$arqx ]] && continue #ANULA ARQUIVO CASO EXISTA
- cp ${SCPT_DIR}/$arqx ${DIR}/${KEY}/ &> /dev/null
+ cp ${SCPT_DIR}/$arqx ${DIR}/${KEY}/
  echo "$arqx" >> ${DIR}/${KEY}/${LIST}
  done
 elif [[ $readvalue = @(x|X) ]]; then
 # GERADOR KEYS
 read -p "KEY DE ACTUALIZACIÓN?: [Y/N]: " -e -i n attGEN
 [[ $(echo $nombrevalue|grep -w "FIXA") ]] && nombrevalue+=[GERADOR]
- for arqx in `ls $SCPT_DIR`; do
+ for arqx in `echo "${arq_list[@]}"`; do
   [[ -e ${DIR}/${KEY}/$arqx ]] && continue #ANULA ARQUIVO CASO EXISTA
   cp ${SCPT_DIR}/$arqx ${DIR}/${KEY}/
  echo "$arqx" >> ${DIR}/${KEY}/${LIST}
- echo "Gerador" >> ${DIR}/${KEY}/GERADOR
  done
 if [[ $attGEN = @(Y|y|S|s) ]]; then
 [[ -e ${DIR}/${KEY}/gerar.sh ]] && rm ${DIR}/${KEY}/gerar.sh
@@ -102,13 +101,11 @@ else
  for arqx in `echo "${readvalue}"`; do
  #UNE ARQ
  [[ -e ${DIR}/${KEY}/${arq_list[$arqx]} ]] && continue #ANULA ARQUIVO CASO EXISTA
- rm ${SCPT_DIR}/*.x.c &> /dev/null
  cp ${SCPT_DIR}/${arq_list[$arqx]} ${DIR}/${KEY}/
  echo "${arq_list[$arqx]}" >> ${DIR}/${KEY}/${LIST}
  done
 echo "TRUE" >> ${DIR}/${KEY}/FERRAMENTA
 fi
-rm ${SCPT_DIR}/*.x.c &> /dev/null
 echo "$nombrevalue" > ${DIR}/${KEY}.name
 [[ ! -z $IPFIX ]] && echo "$IPFIX" > ${DIR}/${KEY}/keyfixa
 echo -e "$BARRA"
@@ -174,36 +171,28 @@ KEYDIR="$DIR/$arqs"
 rm $KEYDIR/*.x.c &> /dev/null
  if [[ $(cat ${DIR}/${arqs}.name|grep GERADOR) ]]; then #Keyen Atualiza
  rm ${KEYDIR}/${LIST}
-   for arqx in `ls $SCPT_DIR`; do
-    cp ${SCPT_DIR}/$arqx ${KEYDIR}/$arqx
-    echo "${arqx}" >> ${KEYDIR}/${LIST}
-    rm ${SCPT_DIR}/*.x.c &> /dev/null
-    rm $KEYDIR/*.x.c &> /dev/null
+   for arqx in `echo "${BASICINST}"`; do
+    cp ${SCPT_DIR}/$arqx ${DIR}/${arqs}/$arqx
    done
  arqsx=$(ofus "$IP:8888/$arqs/$LIST")
  echo -e "\033[1;33m[KEY]: $arqsx \033[1;32m(ACTUALIZADA!)\033[0m"
  fi
 let i++
 done
-rm ${SCPT_DIR}/*.x.c &> /dev/null
 echo -e "$BARRA"
 echo -ne "\033[0m" && read -p "Enter"
 return 0
 fi
 KEYDIR="$DIR/${keys[$value]}"
-[[ -d "$KEYDIR" ]] && {
-rm $KEYDIR/*.x.c &> /dev/null
+[[ -d "$KEYDIR"
 rm ${KEYDIR}/${LIST}
   for arqx in `ls $SCPT_DIR`; do
   cp ${SCPT_DIR}/$arqx ${KEYDIR}/$arqx
   echo "${arqx}" >> ${KEYDIR}/${LIST}
-  rm ${SCPT_DIR}/*.x.c &> /dev/null
-  rm $KEYDIR/*.x.c &> /dev/null
   done
  arqsx=$(ofus "$IP:8888/${keys[$value]}/$LIST")
  echo -e "\033[1;33m[KEY]: $arqsx \033[1;32m(ACTUALIZADA!)\033[0m"
  read -p "Enter"
- rm ${SCPT_DIR}/*.x.c &> /dev/null
  }
 }
 remover_key () {
