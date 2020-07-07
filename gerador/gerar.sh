@@ -53,11 +53,11 @@ fi
 done
 }
 fun_list () {
-rm ${SCPT_DIR}/*.x.c &> /dev/null
 unset KEY
 KEY="$1"
 #CRIA DIR
 [[ ! -e ${DIR} ]] && mkdir ${DIR}
+[[ ! -e ${DIR}/${KEY} ]] && mkdir ${DIR}/${KEY}
 #ENVIA ARQS
 i=0
 VALUE+="gerar.sh instgerador.sh http-server.py $BASICINST"
@@ -88,10 +88,11 @@ elif [[ $readvalue = @(x|X) ]]; then
 # GERADOR KEYS
 read -p "KEY DE ACTUALIZACIÓN?: [Y/N]: " -e -i n attGEN
 [[ $(echo $nombrevalue|grep -w "FIXA") ]] && nombrevalue+=[GERADOR]
- for arqx in `echo "${arq_list[@]}"`; do
+ for arqx in `ls $SCPT_DIR`; do
   [[ -e ${DIR}/${KEY}/$arqx ]] && continue #ANULA ARQUIVO CASO EXISTA
   cp ${SCPT_DIR}/$arqx ${DIR}/${KEY}/
  echo "$arqx" >> ${DIR}/${KEY}/${LIST}
+ echo "Gerador" >> ${DIR}/${KEY}/GERADOR
  done
 if [[ $attGEN = @(Y|y|S|s) ]]; then
 [[ -e ${DIR}/${KEY}/gerar.sh ]] && rm ${DIR}/${KEY}/gerar.sh
@@ -144,7 +145,6 @@ read -p "Enter para Finalizar"
 }
 att_gen_key () {
 i=0
-rm ${SCPT_DIR}/*.x.c &> /dev/null
 [[ -z $(ls $DIR|grep -v "ERROR-KEY") ]] && return
 echo "[$i] Retornar"
 keys="$keys retorno"
@@ -168,10 +168,8 @@ i=0
 [[ -z $(ls $DIR|grep -v "ERROR-KEY") ]] && return
 for arqs in `ls $DIR|grep -v "ERROR-KEY"|grep -v ".name"`; do
 KEYDIR="$DIR/$arqs"
-rm $KEYDIR/*.x.c &> /dev/null
  if [[ $(cat ${DIR}/${arqs}.name|grep GERADOR) ]]; then #Keyen Atualiza
- rm ${KEYDIR}/${LIST}
-   for arqx in `echo "${BASICINST}"`; do
+   for arqx in `ls $SCPT_DIR`; do
     cp ${SCPT_DIR}/$arqx ${DIR}/${arqs}/$arqx
    done
  arqsx=$(ofus "$IP:8888/$arqs/$LIST")
@@ -184,8 +182,7 @@ echo -ne "\033[0m" && read -p "Enter"
 return 0
 fi
 KEYDIR="$DIR/${keys[$value]}"
-[[ -d "$KEYDIR"
-rm ${KEYDIR}/${LIST}
+[[ -d "$KEYDIR" ]] && {
   for arqx in `ls $SCPT_DIR`; do
   cp ${SCPT_DIR}/$arqx ${KEYDIR}/$arqx
   echo "${arqx}" >> ${KEYDIR}/${LIST}
@@ -225,7 +222,6 @@ for arqs in `ls $DIR|grep -v "ERROR-KEY"|grep -v ".name"`; do
 arqsx=$(ofus "$IP:8888/$arqs/$LIST")
  if [[ -e ${DIR}/${arqs}/used.date ]]; then #KEY USADA
   if [[ $(ls -l -c ${DIR}/${arqs}/used.date|cut -d' ' -f7) != $(date|cut -d' ' -f3) ]]; then
-  rm -rf ${DIR}/${arqs}*
   echo -e "\033[1;31m[KEY]: $arqsx \033[1;32m(ELIMINADA!)\033[0m" 
   else
   echo -e "\033[1;32m[KEY]: $arqsx \033[1;32m(AÚN VÁLIDA!)\033[0m"
