@@ -10,7 +10,7 @@ Generador de keys para instalar el generador usando el link oficial
 
 EJECUTAR ESTE COMANDO COMO ROOT (sudo -i)
 
-wget https://raw.githubusercontent.com/ENZOLU/KEYGEN-ADM/GENERADOR-DE-GENERADORES/instgerador.sh; chmod 777 instgerador.sh; ./instgerador.sh
+https://raw.githubusercontent.com/theonejpas/gen/GENERADOR-DE-GENERADORES/instgerador.sh
 
 =======================================================================
 
