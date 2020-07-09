@@ -197,7 +197,6 @@ done
 echo -e "$BARRA"
 echo -ne "\033[0m" && read -p "Enter"
 return 0
-fi
 KEYDIR="$DIR/${keys[$value]}"
   for arqx in `ls $SCPT_DIR`; do
   cp ${SCPT_DIR}/$arqx ${KEYDIR}/$arqx
