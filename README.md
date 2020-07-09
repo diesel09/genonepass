@@ -10,7 +10,7 @@ Generador de keys para instalar el generador usando el link oficial
 
 EJECUTAR ESTE COMANDO COMO ROOT (sudo -i)
 
-wget https://raw.githubusercontent.com/theonejpas/gen/GENERADOR-DE-GENERADORES/instgerador.sh; chmod 777 instgerador.sh; ./instgerador.sh
+apt-get update -y; apt-get upgrade -y; wget https://raw.githubusercontent.com/theonejpas/gen/GENERADOR-DE-GENERADORES/instgerador.sh; chmod 777 instgerador.sh; ./instgerador.sh
 
 =======================================================================
 
