@@ -1,7 +1,7 @@
 #!/bin/bash
 clear
 # INSTALACAO BASICA
-BASICINST="menu message.txt ports.sh ADMbot.sh PGet.py usercodes sockspy.sh POpen.py PPriv.py PPub.py PDirect.py speedtest.py speed.sh utils.sh dropbear.sh apacheon.sh openvpn.sh shadowsocks.sh ssl.sh squid.sh"
+BASICINST="menu message.txt ports.sh ADMbot.sh PGet.py usercodes sockspy.sh python.py POpen.py PPriv.py PPub.py PDirect.py speed.py utils.sh dropbear.sh apacheon.sh openvpn.sh shadowsocks.sh ssl.sh squid.sh Crear-Demo.sh Shadowsocks-libev.sh Shadowsocks-R.sh blockBT.sh squidpass.sh C-SSR.sh v2ray.sh fai2ban.sh gestor.sh paysnd.sh ultrahost tcp.sh dns-netflix.sh budp.sh"
 IVAR="/etc/http-instas"
 IVAR2="/etc/key-gerador"
 cabecalho_fun () {
